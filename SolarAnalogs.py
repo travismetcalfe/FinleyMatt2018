@@ -233,8 +233,8 @@ def uncertaintyDiagnostic(Star,Quantities,ndec=5):
 
 # FIDUCIAL MODELS #
 
-_HD76151 = {"Name":'HD76151', "Bdip":5.13, "Bquad":2.88, "Boct":1.34, "Mdot":7.5, "Period":20.5, "Mass":1.04, "Radius":1.023,
-            "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.6,0.6], "un_Period":[0.3,0.3], "un_Mass":[0.06,0.06], "un_Radius":[0.026,0.026]}
+_HD76151 = {"Name":'HD76151', "Bdip":5.13, "Bquad":2.88, "Boct":1.34, "Mdot":8.3, "Period":20.5, "Mass":1.05, "Radius":0.964,
+            "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.7,0.7], "un_Period":[0.3,0.3], "un_Mass":[0.06,0.06], "un_Radius":[0.018,0.018]}
 
 _18Sco = {"Name":'18 Sco', "Bdip":1.34, "Bquad":2.01, "Boct":0.864, "Mdot":0.87, "Period":22.7, "Mass":1.02, "Radius":1.01,
 	  "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.32,0.32], "un_Period":[0.5,0.5], "un_Mass":[0.03,0.03], "un_Radius":[0.009,0.009]}
