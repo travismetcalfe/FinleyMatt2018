@@ -102,7 +102,7 @@ def FM18_surf(Bdip, Bquad, Boct, Mdot, Period, Mass, Radius, Info):
 ##########################################################
 
 
-def torqueDiagnostic(fromStarA,toStarB,RhkFieldChange,ndec=5):
+def torqueDiagnostic(fromStarA,toStarB,FieldChange,ndec=5):
 
 	#########################################################
 	#StarA Wind Torque:                                     #
@@ -130,7 +130,7 @@ def torqueDiagnostic(fromStarA,toStarB,RhkFieldChange,ndec=5):
 	#Evaluate the Influence of Changing Each Parameter:     #
 	#########################################################
 	print('#parameter study#')
-	Upsilon, RA, Torque3 = FM18_surf(Bdip=RhkFieldChange*fromStarA["Bdip"], Bquad=RhkFieldChange*fromStarA["Bquad"], Boct=RhkFieldChange*fromStarA["Boct"], Mdot=fromStarA["Mdot"], Period=fromStarA["Period"], Mass=fromStarA["Mass"], Radius=fromStarA["Radius"], Info=False)
+	Upsilon, RA, Torque3 = FM18_surf(Bdip=FieldChange*fromStarA["Bdip"], Bquad=FieldChange*fromStarA["Bquad"], Boct=FieldChange*fromStarA["Boct"], Mdot=fromStarA["Mdot"], Period=fromStarA["Period"], Mass=fromStarA["Mass"], Radius=fromStarA["Radius"], Info=False)
 	print('<B>:',round(Torque3/Torque1-1.,ndec))
 	Upsilon, RA, Torque = FM18_surf(Bdip=toStarB["Bdip"], Bquad=toStarB["Bquad"], Boct=toStarB["Boct"], Mdot=fromStarA["Mdot"], Period=fromStarA["Period"], Mass=fromStarA["Mass"], Radius=fromStarA["Radius"], Info=False)
 	print('Morph:',round(Torque/Torque3-1.,ndec)) # StarB morphology at same <B>
@@ -143,93 +143,8 @@ def torqueDiagnostic(fromStarA,toStarB,RhkFieldChange,ndec=5):
 	print('M:',round(Torque/Torque1-1.,ndec))
 	Upsilon, RA, Torque = FM18_surf(Bdip=fromStarA["Bdip"], Bquad=fromStarA["Bquad"], Boct=fromStarA["Boct"], Mdot=fromStarA["Mdot"], Period=fromStarA["Period"], Mass=fromStarA["Mass"], Radius=toStarB["Radius"], Info=False)
 	print('R:',round(Torque/Torque1-1.,ndec))
-	Upsilon, RA, Torque = FM18_surf(Bdip=RhkFieldChange*fromStarA["Bdip"], Bquad=RhkFieldChange*fromStarA["Bquad"], Boct=RhkFieldChange*fromStarA["Boct"], Mdot=toStarB["Mdot"], Period=toStarB["Period"], Mass=toStarB["Mass"], Radius=toStarB["Radius"], Info=False)
-	print('all non-Morph:',round(Torque/Torque1-1.,ndec))
-	Upsilon, RA, Torque = FM18_surf(Bdip=toStarB["Bdip"], Bquad=toStarB["Bquad"], Boct=toStarB["Boct"], Mdot=toStarB["Mdot"], Period=toStarB["Period"], Mass=toStarB["Mass"], Radius=toStarB["Radius"], Info=False)
-	print('all plus Morph:',round(Torque/Torque1-1.,ndec))
 	print(' ')
 	#########################################################
-
-
-def uncertaintyDiagnostic(Star,Quantities,ndec=5):
-
-	#########################################################
-	#Star Wind Torque:                                      #
-	#########################################################
-	print('# '+Star["Name"]+' #')
-	print(' ')
-
-	print('['+Star["Name"]+', Bd='+str(Star["Bdip"])+', Bq='+str(Star["Bquad"])+', Bo='+str(Star["Boct"])+']')
-	Upsilon, RA, Torque1 = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-	print('Torque:',round(Torque1/1e30,ndec),'x10^30erg') #fiducial model Star
-	print(' ')
-	#########################################################
-	Bdip_n = 0
-	Bdip_p = 0
-	Bquad_n = 0
-	Bquad_p = 0
-	Boct_n = 0
-	Boct_p = 0
-	Mdot_n = 0
-	Mdot_p = 0
-	Period_n = 0
-	Period_p = 0
-	Mass_n = 0
-	Mass_p = 0
-	Period_n = 0
-	Period_p = 0
-	#########################################################
-	#Influence of Unceratinty in Each Parameter:            #
-	#########################################################
-	print('# uncertainties #')
-
-	for Quantity in Quantities:
-		if Quantity in list(Star.keys()):
-			print('['+Star["Name"]+', '+Quantity+'='+str(Star[Quantity])+'-'+str(Star["un_"+Quantity][0])+'/+'+str(Star["un_"+Quantity][1])+']')
-			if Quantity == "Bdip":
-                                Upsilon, RA, Torque1 = FM18_surf(Bdip=Star["Bdip"], Bquad=0, Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_n = FM18_surf(Bdip=abs(Star["Bdip"]-Star["un_"+Quantity][0]), Bquad=0, Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_p = FM18_surf(Bdip=abs(Star["Bdip"]+Star["un_"+Quantity][1]), Bquad=0, Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Bdip_n = Star["un_"+Quantity][0]
-                                Bdip_p = Star["un_"+Quantity][1]
-			elif Quantity == "Bquad":
-                                Upsilon, RA, Torque1 = FM18_surf(Bdip=0, Bquad=Star["Bquad"], Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_n = FM18_surf(Bdip=0, Bquad=abs(Star["Bquad"]-Star["un_"+Quantity][0]), Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_p = FM18_surf(Bdip=0, Bquad=abs(Star["Bquad"]+Star["un_"+Quantity][1]), Boct=0, Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Bquad_n = Star["un_"+Quantity][0]
-                                Bquad_p = Star["un_"+Quantity][1]
-			elif Quantity == "Boct":
-                                Upsilon, RA, Torque1 = FM18_surf(Bdip=0, Bquad=0, Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_n = FM18_surf(Bdip=0, Bquad=0, Boct=abs(Star["Boct"]-Star["un_"+Quantity][0]), Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Upsilon, RA, Torque_p = FM18_surf(Bdip=0, Bquad=0, Boct=abs(Star["Boct"]+Star["un_"+Quantity][1]), Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-                                Boct_n = Star["un_"+Quantity][0]
-                                Boct_p = Star["un_"+Quantity][1]
-			elif Quantity == "Mdot":
-				Upsilon, RA, Torque_n = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"]-Star["un_"+Quantity][0], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-				Upsilon, RA, Torque_p = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"]+Star["un_"+Quantity][1], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-				Mdot_n = Star["un_"+Quantity][0]
-				Mdot_p = Star["un_"+Quantity][1]
-			elif Quantity == "Period":
-				Upsilon, RA, Torque_n = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"]-Star["un_"+Quantity][0], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-				Upsilon, RA, Torque_p = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"]+Star["un_"+Quantity][1], Mass=Star["Mass"], Radius=Star["Radius"], Info=False)
-				Period_n = Star["un_"+Quantity][0]
-				Period_p = Star["un_"+Quantity][1]
-			elif Quantity == "Mass":
-				Upsilon, RA, Torque_n = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"]-Star["un_"+Quantity][0], Radius=Star["Radius"], Info=False)
-				Upsilon, RA, Torque_p = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"]+Star["un_"+Quantity][1], Radius=Star["Radius"], Info=False)
-				Mass_n = Star["un_"+Quantity][0]
-				Mass_p = Star["un_"+Quantity][1]
-			elif Quantity == "Radius":
-				Upsilon, RA, Torque_n = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"]-Star["un_"+Quantity][0], Info=False)
-				Upsilon, RA, Torque_p = FM18_surf(Bdip=Star["Bdip"], Bquad=Star["Bquad"], Boct=Star["Boct"], Mdot=Star["Mdot"], Period=Star["Period"], Mass=Star["Mass"], Radius=Star["Radius"]+Star["un_"+Quantity][1], Info=False)
-				Radius_n = Star["un_"+Quantity][0]
-				Radius_p = Star["un_"+Quantity][1]
-			print(Quantity+'(-):',round(Torque_n/Torque1-1.,ndec))
-			print(Quantity+'(+):',round(Torque_p/Torque1-1.,ndec))
-			print(' ')
-		else:
-			print('No Quantity {'+Quantity+'} in '+Star["Name"]+' ...')
-
 
 # FIDUCIAL MODELS #
 
@@ -247,37 +162,3 @@ print(' ')
 
 torqueDiagnostic(_88Leo,_rhoCrB,0.6039) # 88 Leo x Delta<logR'hk>=-0.219 => 0.6039
 print(' ')
-
-
-print('# UNCERTAINTIES #')
-print(' ')
-
-# 88 Leo #
-
-uncertaintyDiagnostic(_88Leo,['Mdot','Period','Mass','Radius'])
-
-# combined uncertainty for fiducial model
-Upsilon, RA, Torque1 = FM18_surf(Bdip=5.0, Bquad=0, Boct=0, Mdot=2.0, Period=15.0, Mass=1.14, Radius=1.127, Info=False)
-
-Upsilon, RA, Torque = FM18_surf(Bdip=5.0, Bquad=0, Boct=0, Mdot=1.4, Period=15.3, Mass=1.21, Radius=1.090, Info=False)
-print('all(-):',round(Torque/Torque1-1.,ndec))
-Upsilon, RA, Torque = FM18_surf(Bdip=5.0, Bquad=0, Boct=0, Mdot=2.6, Period=14.7, Mass=1.07, Radius=1.164, Info=False)
-print('all(+):',round(Torque/Torque1-1.,ndec))
-print(' ')
-print(' ')
-
-
-# rho CrB #
-
-uncertaintyDiagnostic(_rhoCrB,['Mdot','Period','Mass','Radius'])
-
-# combined uncertainty for fiducial model
-Upsilon, RA, Torque1 = FM18_surf(Bdip=0, Bquad=1.86, Boct=2.15, Mdot=0.36, Period=20.3, Mass=0.96, Radius=1.304, Info=False)
-
-Upsilon, RA, Torque = FM18_surf(Bdip=0, Bquad=1.86, Boct=2.15, Mdot=0.29, Period=22.1, Mass=0.98, Radius=1.292, Info=False)
-print('all(-):',round(Torque/Torque1-1.,ndec))
-Upsilon, RA, Torque = FM18_surf(Bdip=0, Bquad=1.86, Boct=2.15, Mdot=0.43, Period=18.5, Mass=0.94, Radius=1.316, Info=False)
-print('all(+):',round(Torque/Torque1-1.,ndec))
-print(' ')
-print(' ')
-
