@@ -151,7 +151,11 @@ def torqueDiagnostic(fromStarA,toStarB,FieldChange,ndec=5):
 _88Leo = {"Name":'88 Leo', "Bdip":5.0, "Bquad":0, "Boct":0, "Mdot":2.0, "Period":15.0, "Mass":1.14, "Radius":1.127,
             "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.6,0.6], "un_Period":[0.3,0.3], "un_Mass":[0.07,0.07], "un_Radius":[0.037,0.037]}
 
-_rhoCrB = {"Name":'rho CrB', "Bdip":0, "Bquad":1.86, "Boct":2.15, "Mdot":0.36, "Period":20.3, "Mass":0.96, "Radius":1.304,
+_rhoCrB_Bd = {"Name":'rho CrB', "Bdip":0.7, "Bquad":0, "Boct":0, "Mdot":0.36, "Period":20.3, "Mass":0.96, "Radius":1.304,
+	  "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.07,0.07], "un_Period":[1.8,1.8], "un_Mass":[0.02,0.02], "un_Radius":[0.012,0.012]}
+_rhoCrB_Bq = {"Name":'rho CrB', "Bdip":0, "Bquad":2.4, "Boct":0, "Mdot":0.36, "Period":20.3, "Mass":0.96, "Radius":1.304,
+	  "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.07,0.07], "un_Period":[1.8,1.8], "un_Mass":[0.02,0.02], "un_Radius":[0.012,0.012]}
+_rhoCrB_Bo = {"Name":'rho CrB', "Bdip":0, "Bquad":0, "Boct":19.6, "Mdot":0.36, "Period":20.3, "Mass":0.96, "Radius":1.304,
 	  "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.07,0.07], "un_Period":[1.8,1.8], "un_Mass":[0.02,0.02], "un_Radius":[0.012,0.012]}
 
 
@@ -160,5 +164,7 @@ ndec=5 # Number of decimal places for the outputs
 print('# EVOLUTIONARY SEQUENCE #')
 print(' ')
 
-torqueDiagnostic(_88Leo,_rhoCrB,0.6039) # 88 Leo x Delta<logR'hk>=-0.219 => 0.6039
+torqueDiagnostic(_88Leo,_rhoCrB_Bd,0.64) # 88 Leo x (<Bz>=0.27/<Bz>=0.42) => 0.64
+torqueDiagnostic(_88Leo,_rhoCrB_Bq,0.64) 
+torqueDiagnostic(_88Leo,_rhoCrB_Bo,0.64) 
 print(' ')
