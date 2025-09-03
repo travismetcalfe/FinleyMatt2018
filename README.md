@@ -9,6 +9,8 @@ coolG.py - calculations reported in Metcalfe et al (2023)
 
 51Peg.py - calculations reported in Metcalfe et al (2024)
 
-Kstars.py - calculations reported in Metcalfe et al (2025)
+Kstars.py - calculations reported in Metcalfe et al (2025a)
 
 betHyi.py - calculations reported in Santos et al (2025)
+
+FGKstars.py - uniform results reported in Metcalfe et al (2025b)
