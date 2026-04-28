@@ -14,3 +14,5 @@ Kstars.py - calculations reported in Metcalfe et al (2025a)
 betHyi.py - calculations reported in Santos et al (2025)
 
 FGKstars.py - uniform results reported in Metcalfe et al (2025b)
+
+31Aql.py - calculations reported in Metcalfe et al (2026)
