@@ -297,9 +297,6 @@ def torqueDiagnostic(fromStarA,toStarB,FieldChange,ndec=5):
 _16CygA_Bd = {"Name":'16 Cyg A', "Bdip":0.5, "Bquad":0, "Boct":0, "Mdot":0.92, "Period":20.5, "Mass":1.072, "Radius":1.223,
               "un_Bdip":['N/A','N/A'], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.16,0.16], "un_Period":[1.1,2.0], "un_Mass":[0.013,0.013], "un_Radius":[0.005,0.005]}
 
-_alt31Aql = {"Name":'31 Aql', "Bdip":8.5, "Bquad":0.0, "Boct":0.0, "Mdot":1.05, "Period":40.3, "Mass":1.07, "Radius":1.358,
-          "un_Bdip":[-1.1,1.1], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[-0.58,1.08], "un_Period":[-1.5,1.5], "un_Mass":[-0.04,0.04], "un_Radius":[-0.016,0.016]}
-
 _31Aql = {"Name":'31 Aql', "Bdip":8.5, "Bquad":0.0, "Boct":0.0, "Mdot":1.05, "Period":40.3, "Mass":1.07, "Radius":1.358,
 "un_Bdip":[1.1,1.1], "un_Bquad":['N/A','N/A'], "un_Boct":['N/A','N/A'], "un_Mdot":[0.58,1.08], "un_Period":[1.5,1.5], "un_Mass":[0.04,0.04], "un_Radius":[0.016,0.016]}
 
